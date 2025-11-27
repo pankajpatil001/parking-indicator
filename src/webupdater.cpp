@@ -16,8 +16,7 @@ String setUpForm() {
 }
 
 String sendDeviceUUID() {
-  String du = "<h3>Device UUID: </h3>";
-  du += "<p>" + String(deviceUUID) + "</p>";
+  String du = "Device UUID: " + String(deviceUUID);
   return du;
 }
 
