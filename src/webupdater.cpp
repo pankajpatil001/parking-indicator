@@ -15,6 +15,12 @@ String setUpForm() {
   return page;
 }
 
+String sendDeviceUUID() {
+  String du = "<h3>Device UUID: </h3>";
+  du += "<p>" + String(deviceUUID) + "</p>";
+  return du;
+}
+
 void handleSaveDeviceSetup() {
   if (httpServer.hasArg("rpiServer")) {
     strncpy(rpiServer, httpServer.arg("rpiServer").c_str(), RPI_IP_SIZE);
@@ -144,7 +150,16 @@ void setupHTTPRoutes() {
   String saveDeviceSetupPath = String("/save-device-setup/") + String(deviceUUID);
   String otaUpdatePath = String("/ota-update/") + String(deviceUUID);
   String restartDevicePath = String("/restart-device/") + String(deviceUUID);
+  String getDeviceUUID = String("/get-uuid/");
   // String testRegisterPath = String("/test-register-device/") + String(deviceUUID);
+
+  httpServer.on(getDeviceUUID, HTTP_GET, []() {
+    if (!httpServer.authenticate(OTA_USERNAME, OTA_PASSWORD)) {
+      return httpServer.requestAuthentication();
+    }
+    httpServer.sendHeader("Connection", "close");
+    httpServer.send(200, "text/plain", sendDeviceUUID());
+  });
 
   httpServer.on(loginPath.c_str(), HTTP_GET, []() {
     if (serial) Serial.println("Login page requested.");
