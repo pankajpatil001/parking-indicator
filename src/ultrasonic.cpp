@@ -93,7 +93,7 @@ void getDistance() {
     if(serial) Serial.println(distance);
     if(serial) Serial.println("\n");
     // if(parkSpaceOccupied && distance > parkSpaceVehicleDistance) {
-    if ((parkSpaceOccupied || (millis() - tPushStatus > pushStatusTime)) && distance > parkSpaceVehicleDistance) {
+    if (distance >= parkSpaceVehicleDistance) {
       setParkSlotAvailable();
       if (client.connected()) {
         char topic[256];
@@ -109,7 +109,7 @@ void getDistance() {
       tPushStatus = millis();
      }
     // else if (!parkSpaceOccupied && distance < parkSpaceVehicleDistance) {
-    else if ((!parkSpaceOccupied || (millis() - tPushStatus > pushStatusTime)) && distance < parkSpaceVehicleDistance) {
+    else if (distance < parkSpaceVehicleDistance) {
       setParkSlotOccupied();
       if (client.connected()) {
         char topic[256];
