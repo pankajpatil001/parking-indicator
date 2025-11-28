@@ -92,7 +92,8 @@ void getDistance() {
     if(serial) Serial.print("\nAverage Distance = ");        //Output distance on arduino serial monitor 
     if(serial) Serial.println(distance);
     if(serial) Serial.println("\n");
-    if(parkSpaceOccupied && distance > parkSpaceVehicleDistance) {
+    // if(parkSpaceOccupied && distance > parkSpaceVehicleDistance) {
+    if ((parkSpaceOccupied || (millis() - tPushStatus > pushStatusTime)) && distance > parkSpaceVehicleDistance) {
       setParkSlotAvailable();
       if (client.connected()) {
         char topic[256];
@@ -105,8 +106,10 @@ void getDistance() {
         if (serial) Serial.println(str);
         client.publish(topic, valueStr);
       }
+      tPushStatus = millis();
      }
-    else if (!parkSpaceOccupied && distance < parkSpaceVehicleDistance) {
+    // else if (!parkSpaceOccupied && distance < parkSpaceVehicleDistance) {
+    else if ((!parkSpaceOccupied || (millis() - tPushStatus > pushStatusTime)) && distance < parkSpaceVehicleDistance) {
       setParkSlotOccupied();
       if (client.connected()) {
         char topic[256];
@@ -119,6 +122,7 @@ void getDistance() {
         if (serial) Serial.println(str);
         client.publish(topic, valueStr);
       }
+      tPushStatus = millis();
      }
     tkeepUS = millis();
   }

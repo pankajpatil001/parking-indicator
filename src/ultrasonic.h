@@ -9,8 +9,8 @@
 extern unsigned long duration;
 extern bool serial, parkSpaceOccupied;
 extern unsigned int distance, prevDistance;
-extern unsigned long tkeepUS;
-extern unsigned int usTime, parkSpaceVehicleDistance;
+extern unsigned long tkeepUS, tPushStatus;
+extern unsigned int usTime, parkSpaceVehicleDistance, pushStatusTime;
 extern PubSubClient client;
 extern char valueStr[100], deviceUUID[36]; // UUID for the device
 void getDistance();

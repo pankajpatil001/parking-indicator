@@ -17,11 +17,11 @@ unsigned long duration;
 unsigned int distance, prevDistance=0;
 //---------------------------------------------------
 
-unsigned long tkeepUS = 500, tkeepUSpub = 500, tkeepRssi = 1000;
+unsigned long tkeepUS = 500, tkeepUSpub = 500, tkeepRssi = 1000, tPushStatus = 1500;
 unsigned long tkeepConnect=0, lastReconnectAttempt=0;
 unsigned int rssiTime = 6000;
 unsigned int connectTime = 5000;
-unsigned int usTime = 5000, uspubTime = 10000;
+unsigned int usTime = 5000, uspubTime = 10000, pushStatusTime = 10000;
 
 char valueStr[100];
 char SERVER[16] = "192.168.0.111";
